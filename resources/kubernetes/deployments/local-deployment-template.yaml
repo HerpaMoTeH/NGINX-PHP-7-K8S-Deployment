@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: php7
-        image: r6by/php7:0.1.1
+        image: winternight/php7-fpm:7.2
         ports:
         - containerPort: 9000
         volumeMounts:
@@ -21,7 +21,7 @@ spec:
       volumes:
       - name: src
         hostPath:
-          path:
+          path: $PHP_SRC_PATH_CONF
 
 ---
 apiVersion: extensions/v1beta1
@@ -40,3 +40,10 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 8088
+        volumeMounts:
+          - mountPath: /etc/nginx/conf.d
+            name: config
+      volumes:
+      - name: config
+        hostPath:
+          path: $NGINX_CONF_PATH_CONF
